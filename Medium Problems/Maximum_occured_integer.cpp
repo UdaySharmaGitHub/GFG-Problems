@@ -22,6 +22,7 @@ Constraints:
 1 ≤ n ≤ 106
 0 ≤ l[i], r[i] ≤ 106
 */
+
 /*
 Time Complexity: O(N + MAX) 
 Auxiliary space: O(MAX)
