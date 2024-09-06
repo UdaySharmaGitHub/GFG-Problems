@@ -9,8 +9,8 @@ Explanation: Three ways to reach at 4th stair. They are {1, 1, 1, 1}, {1, 1, 2},
 Input: n = 5
 Output: 3
 Explanation: Three ways to reach at 5th stair. They are {1, 1, 1, 1, 1}, {1, 1, 2, 1} and {1, 2, 2}.
-Expected Time Complexity: O(n)
-Expected Space Complexity: O(n)
+Expected Time Complexity: O(1)
+Expected Space Complexity: O(1)
 Constraints:
 1 ≤ n ≤ 104
 */
