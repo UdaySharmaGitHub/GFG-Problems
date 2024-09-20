@@ -21,6 +21,31 @@ You dont need to read input or print anything. Complete the function reverseWord
 Expected Time Complexity: O(|S|)
 Expected Auxiliary Space: O(|S|)
 */
+
+class Solution {
+  public:
+    // Function to reverse words in a given string.
+    string reverseWords(string str) {
+        // code here
+        stack<string> st;
+        string s ="";
+        for(char ch:str){
+            if(ch!='.') s+=ch;
+            else{
+                st.push(s);
+                s="";
+            }
+        }
+        st.push(s);
+        str="";
+        while(!st.empty()){
+            str+=st.top();
+            if(st.size()!=1) str+='.';
+            st.pop();
+        }
+        return str;
+    }
+};
 class Solution
 {
     public:
