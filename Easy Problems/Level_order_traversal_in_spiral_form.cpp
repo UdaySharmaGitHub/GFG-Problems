@@ -45,6 +45,9 @@ struct Node
 
 
 //Function to return a list containing the level order traversal in spiral form.
+
+class Solution {
+  public:
 vector<int> findSpiral(Node *root)
 {
   //Your code here
@@ -69,3 +72,37 @@ vector<int> findSpiral(Node *root)
        }
     return ans;
 }
+};
+//Function to return a list containing the level order traversal in spiral form.
+class Solution {
+  public:
+    vector<int> findSpiral(Node* root) {
+        // code here
+        vector<int> res;
+        bool order = 0;
+        queue<Node*> q;
+        vector<int> temp;
+        q.push(root);
+        while(!q.empty()){
+            int n = q.size();
+            for(int i=0;i<n;i++){
+                Node* frontNode = q.front();
+                q.pop();
+                if(!order){
+                    temp.push_back(frontNode->data);
+                }
+                else{
+                    res.push_back(frontNode->data);
+                }
+                if(frontNode->left) q.push(frontNode->left);
+                if(frontNode->right ) q.push(frontNode->right);
+            }
+            if(!order){
+                for(int i=temp.size()-1;i>=0;i--) res.push_back(temp[i]);
+                temp.clear();
+            }
+            order =!order;
+        }
+        return res;
+    }
+};
