@@ -1,106 +1,74 @@
 /*
-Subsets
-Given a set of positive integers, find all its subsets.
-
-Example 1 :
-
-Input : 
-array = {1, 2, 3}
-Output :
-// this space denotes null element. 
-1
-1 2
-1 2 3
-1 3
-2
-2 3
-3
+Given an array arr[] of distinct positive integers, your task is to find all its subsets.
+Note: You can return the subsets in any order, the driver code will print them in sorted order.
+Examples:
+Input: arr[] = [1, 2, 3]
+Output: [[], [1], [1, 2], [1, 2, 3], [1, 3], [2], [2, 3], [3]]
 Explanation: 
-The following are the subsets 
-of the array {1, 2, 3}.
-Example 2 :
-
-Input :
-array = {1, 2}
-Output :
-
-1 
-1 2
-2
-Explanation :
-The following are the 
-subsets of {1, 2}.
-Your task :
-You don't have to read input or print anything. Your task is to complete the function subsets() which takes the array of integers as input and returns the list of lists containing the subsets of the given set of numbers in lexicographical order.
- 
-Expected Time Complexity : O(2n)
-Expected Auxiliary Space : O((2n)*length of each subset)
- 
+The subsets of [1, 2, 3] in lexicographical order are:
+[], [1], [1, 2], [1, 2, 3], [1, 3], [2], [2, 3], [3]
+Input: arr[] = [2, 4]
+Output: [[], [2], [2, 4], [4]]
+Explanation:
+The subsets of [2, 4] in lexicographical order are:
+[], [2], [2, 4], [4]
 Constraints :
-1 <= n <= 15
-1 <= arr[i] <=104
+1 ≤ arr.size() ≤ 10
+1 ≤ arr[i] ≤ 103
 */
-//{ Driver Code Starts
-// Initial Template for C++
-
-#include <bits/stdc++.h>
-using namespace std;
-
-
-// } Driver Code Ends
-// User function Template for C++
-
+/*
+    Approach -1 Using Recursion
+    Time Complexity: O(n * 2n), generating all subsets requires 2n recursive calls, and copying each subset of size up to n takes O(n) time.
+    Auxiliary Space: O(n), recursion stack and temporary subset use at most n space at a time.
+*/
 class Solution {
-private:
-    void solve(vector<int> arr , vector<int>output,int index,vector<vector<int>>&ans){
-        if(index>=arr.size()){
-            ans.push_back(output);
-            return;
-        }
-        solve(arr,output,index+1,ans);
-        output.push_back(arr[index]);
-        solve(arr,output,index+1,ans);
-    }
   public:
-    vector<vector<int> > subsets(vector<int>& a) {
+  void totalSubSet(vector<int> arr,int idx,vector<vector<int>>&res,vector<int>subset){
+      if(idx>=arr.size()){
+          res.push_back(subset);
+          return ;
+      }
+      totalSubSet(arr,idx+1,res,subset);
+      subset.push_back(arr[idx]);
+      totalSubSet(arr,idx+1,res,subset);
+  }
+    vector<vector<int>> subsets(vector<int>& arr) {
         // code here
-                //code here
-        vector<vector<int>>ans;
-        vector<int> output;
-        int index = 0 ;
-        solve(a,output,index,ans);
-        sort(ans.begin(),ans.end());
-        return ans;
+        vector<vector<int>> res;
+        vector<int> subset;
+        int idx =0;
+        totalSubSet(arr,idx,res,subset);
+        return res;
     }
 };
-
-//{ Driver Code Starts.
-
-int main() {
-    int t;
-    cin >> t;
-
-    while (t--) {
-        int n, x;
-        cin >> n;
-
-        vector<int> array;
-        for (int i = 0; i < n; i++) {
-            cin >> x;
-            array.push_back(x);
-        }
-
-        Solution ob;
-        vector<vector<int> > res = ob.subsets(array);
-
-        // Print result
-        for (int i = 0; i < res.size(); i++) {
-            for (int j = 0; j < res[i].size(); j++)
-                cout << res[i][j] << " ";
-            cout << endl;
-        }
+/*
+    Using Bit Manipulation
+    Approach -2 Optimized Apprach
+    Time Complexity: O(n * 2n), generating all subsets requires 2n recursive calls, and copying each subset of size up to n takes O(n) time.
+    Auxiliary Space: O(n), recursion stack and temporary subset use at most n space at a time.
+*/
+/*
+    Example: Consider an array [A, B]:
+    0 → 00 → A excluded, B excluded → []
+    1 → 01 → A excluded, B included → [B]
+    2 → 10 → A included, B excluded → [A]
+    3 → 11 → A included, B included → [A, B]
+Time Complexity: O(n * 2n), generating all subsets requires 2n recursive calls, and copying each subset of size up to n takes O(n) time.
+Auxiliary Space: O(n), temporary subset at most n space at a time
+*/
+class Solution {
+  public:
+    vector<vector<int>> subsets(vector<int>& arr) {
+        // code here
+       int n = arr.size();
+       vector<vector<int>> res;
+       for(int i =0;i<(1<<n);i++){
+           vector<int> subset;
+           for(int j=0;j<n;j++){
+               if((i&(1<<j))!=0) subset.push_back(arr[j]);
+           }
+           res.push_back(subset);
+   }        
+       return res;      
     }
-
-    return 0;
-}
-// } Driver Code Ends
+};
