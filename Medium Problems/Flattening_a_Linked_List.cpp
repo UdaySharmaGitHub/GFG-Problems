@@ -48,8 +48,7 @@ Constraints:
 1 <= Mi <= 20
 1 <= Element of linked list <= 103
 */
-// } Driver Code Ends
-/* Node structure  used in the program
+/*
 struct Node{
 	int data;
 	struct Node * next;
@@ -61,10 +60,12 @@ struct Node{
 	}	
 };
 */
-// Most Optimized Approah
-// n = no of node in vertical LL , m = no of node in Horizontal LL
-// Time Complexity O(n*m) 
-// Space Complexity o(n) => for recursion
+/*
+    Most Optimized Approah
+    n = no of node in vertical LL , m = no of node in Horizontal LL
+    Time Complexity O(n*m) 
+    Space Complexity O(n) => for recursion
+*/
 class Solution {
 private:
     Node * merge(Node* l1 , Node* l2){
@@ -96,3 +97,4 @@ public:
 	        return merge(root,mergeHead);      
     }
 };
+//{ Driver Code Starts.
