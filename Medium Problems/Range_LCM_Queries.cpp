@@ -29,6 +29,24 @@ Constraints:
 0 ≤ index ≤ arr.size() - 1
 1 ≤ arr[i], value ≤ 104
 */
+/*
+    APPROACH:
+    steps:
+    1. We can use a segment tree to efficiently handle both update and range LCM queries.
+    2. The segment tree will be built based on the input array, where each node will store the LCM of a segment of the array.
+    3. For update queries, we will update the value at the specified index and then recalculate the LCM values for the affected nodes in the segment tree.
+    4. For range queries, we will traverse the segment tree to compute the LCM of the specified range.
+    5. The LCM can be calculated using the formula: LCM(a, b) = (a * b) / GCD(a, b), where GCD is the greatest common divisor.
+    6. We will return the results of all Type 2 queries in a list.
+
+    TIME COMPLEXITY:
+    - Building the segment tree takes O(n) time.
+    - Each update operation takes O(log n) time.
+    - Each range query takes O(log n) time. 
+    - Therefore, for q queries, the overall time complexity is O((n + q) log n).
+    SPACE COMPLEXITY:
+    - The segment tree requires O(4 * n) space to store the LCM values, where n is the size of the input array. 
+*/
 class Solution {
   long long lcm(long long a, long long b) {
         return ((a * b) / __gcd(a, b));
