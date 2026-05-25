@@ -28,121 +28,29 @@ Constraints:
 1 ≤ N ≤ 107
 */
 //{ Driver Code Starts
-#include <bits/stdc++.h>
-using namespace std;
+/*
+    APPROACH:
+    Step:
+    1. We will calculate the total number of elements in the given range using the formula (end - start) + 1.
+    2. We will iterate through the array and check if each element is within the range (start to end). If it is, we will decrement the total count.
+    3. If at any point the total count becomes zero, it means we have found all the elements in the range, and we can return true.
+    4. If we finish iterating through the array and the total count is not zero, it means we are missing some elements in the range, and we will return false.
 
-// } Driver Code Ends
-class Solution{
-	public:
-    // Method 1 : (Intuitive)
-    // Time complexity: O(n log n) 
-// Auxiliary space: O(1)
-bool check_elements1(int arr[], int n, int A, int B) {
-    if (A > B) {
-        return false; // invalid range
-    }
- 
-    for (int i = A; i <= B; i++) {
-        bool found = false;
-        for (int j = 0; j < n; j++) {
-            if (arr[j] == i) {
-                found = true;
-                break;
+    Time Complexity: O(N) - We need to iterate through the array once.
+    Auxiliary Space: O(1) - We are using a constant amount of space to store the total count and other variables.
+*/
+class Solution {
+  public:
+    bool checkElements(int start, int end, vector<int> &arr) {
+         // code here
+        // int  cout=0;
+        int total= (end- start) +1;
+        for(int i=0; i<arr.size(); i++){
+            if(arr[i]>= start and arr[i]<= end){
+                total--;
             }
+            if(total==0)return 1;
         }
-        if (!found) {
-            return false; // element not found in array
-        }
+        return total== 0 ? true : false;
     }
-    return true; // all elements in range found in array
-}
-// Time complexity: O(n) 
-// Auxiliary space: O(n)
-	bool check_elements(int arr[], int n, int A, int B)
-	{
-		// Your code goes here
-		set<int> ans;
-		int count = B-A+1;
-		for(int i = 0 ;i<n;i++){
-		    if(arr[i] >= A && arr[i]<=B){
-                ans.insert(arr[i]);
-		    }
-		}
-		return (ans.size() == count)?1:0;
-	}
-
-    // Method 3 : (Best):
-    // Time complexity : O(n) 
-// Auxiliary space : O(1)
-bool check_elements2(int arr[], int n, int A, int B)
-{
-    //Array should contain atleast B-A+1 elements
-    if(n<B-A+1) return false;
-    // Range is the no. of elements that are
-    // to be checked
-    int range = B - A;
- 
-    // Traversing the array
-    for (int i = 0; i < n; i++) {
-        // If an element is in range
-        if (abs(arr[i]) >= A && abs(arr[i]) <= B) {
-            // Negating at index ‘element – A’
-            int z = abs(arr[i]) - A;
-            if (arr[z] > 0)
-                arr[z] = arr[z] * -1;
-        }
-    }
-    // Checking whether elements in range 0-range
-    // are negative
-    int count = 0;
-    for (int i = 0; i <= range && i < n; i++) {
-        // Element from range is missing from array
-        if (arr[i] > 0)
-            return false;
-        else
-            count++;
-    }
-    if (count != (range + 1))
-        return false;
-    // All range elements are present
-    return true;
-}
-
-
-		 
-
 };
-	
-
-//{ Driver Code Starts.
-
-
-int main() 
-{
-   	
-   
-   	int t;
-    cin >> t;
-    while (t--)
-    {
-    	int n,A,B;
-		cin>>n>>A>>B;
-		int a[n];
-		for(int i=0;i<n;++i)
-			cin>>a[i];
-
-        
-
-        Solution ob;
-        if (ob.check_elements(a, n, A, B))
-			cout << "Yes";
-		else
-			cout << "No";
-	    
-        
-	    cout << "\n";
-	     
-    }
-    return 0;
-}
-// } Driver Code Ends
