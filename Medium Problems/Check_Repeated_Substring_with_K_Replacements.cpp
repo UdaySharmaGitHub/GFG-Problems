@@ -19,3 +19,35 @@ Explanation: Since we are allowed to change only one instance, we cannot covert.
 Constraints:
 2 ≤ k ≤ s.size() ≤ 105
 */
+/*
+    APPROACH:
+    1. We can check if the length of the string is divisible by k, if not then we can return false.
+    2. We can create a map to store the count of each substring of length k.
+    3. If the size of the map is 1, then we can return true, as all the substrings are the same.
+    4. If the size of the map is greater than 2, then we can return false, as we can only replace one substring.
+    5. If the size of the map is 2, then we can check if    
+         a. If one of the substrings has a count of 1 and its length is k, then we can replace it with the other substring and return true.
+         b. Otherwise, we can return false. 
+
+    Time Complexity: O(n), where n is the length of the string.
+    Space Complexity: O(n), where n is the length of the string.
+*/
+class Solution {
+  public:
+    bool kSubstr(string &s, int k) {
+        // code here
+        
+        if(s.size()%k!=0) return 0;
+        unordered_map<string ,int> map;
+        for(int i =0 ; i<s.size();i+=k){
+            string temp = s.substr(i,k);
+            map[temp]++;
+        }
+        if(map.size()==1) return 1;
+        if(map.size()>2) return 0;
+        for(auto i:map){
+            if(i.second == 1 && i.first.size()==k) return 1; 
+        }
+        return 0;
+    }
+};
