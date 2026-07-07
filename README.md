@@ -16,6 +16,7 @@ A curated collection of **solved Data Structures & Algorithms problems** from [G
   - [Hard Problems](#-hard-problems)
 - [Topics Covered](#topics-covered)
 - [How to Contribute](#how-to-contribute)
+- [Git Hooks Setup](#git-hooks-setup-optional-but-recommended)
 - [Naming Convention](#naming-convention)
 - [License](#license)
 
@@ -227,6 +228,55 @@ git push origin add/<Problem_Name>
 ### 6. Open a Pull Request
 
 Open a PR against the `main` branch. Describe the problem, your approach, and the time/space complexity.
+
+---
+
+## Git Hooks Setup (Optional but Recommended)
+
+This repository includes **automatic commit message formatting** via git hooks. The hooks will:
+
+1. **`prepare-commit-msg`** — Auto-generates commit messages in the format:
+   ```
+   POTD DD-MM-YYYY : problem_name
+   ```
+   Example: `POTD 07-07-2026 : Two Sum`
+
+2. **`commit-msg`** — Validates your commit message:
+   - Ensures the message starts with `POTD` or a capital letter
+   - Minimum 5 characters long
+   - Allows merge/revert commits to bypass validation
+
+### Quick Setup
+
+After cloning the repository, run the setup script:
+
+```bash
+bash setup-hooks.sh
+```
+
+Or manually set up hooks:
+
+```bash
+# Copy hooks from git_hooks/ to .git/hooks/
+cp git_hooks/prepare-commit-msg .git/hooks/
+cp git_hooks/commit-msg .git/hooks/
+
+# Make them executable
+chmod +x .git/hooks/prepare-commit-msg
+chmod +x .git/hooks/commit-msg
+```
+
+### Usage
+
+Simply commit as usual — the message will be **auto-generated**:
+
+```bash
+git add "Easy Problems/Your_Problem_Name.cpp"
+git commit
+# Message auto-populates: POTD 07-07-2026 : Your_Problem_Name
+```
+
+**Note:** Git hooks are local and not pushed to GitHub. They need to be set up on each machine after cloning. The `setup-hooks.sh` script makes this easy!
 
 ---
 
