@@ -17,16 +17,19 @@ BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
 # Get list of modified/added files
 FILES=$(git diff --cached --name-only)
-PROBLEM_TYPE=""
-DIFFICULTY=""
+TYPE=""
 
-# Analyze files to determine problem type
-if echo "$FILES" | grep -q "Easy"; then
-    DIFFICULTY="[Easy]"
+# Analyze files to determine problem type/difficulty
+if echo "$FILES" | grep -q "School"; then
+    TYPE="[School]"
+elif echo "$FILES" | grep -q "Basic"; then
+    TYPE="[Basic]"
+elif echo "$FILES" | grep -q "Easy"; then
+    TYPE="[Easy]"
 elif echo "$FILES" | grep -q "Medium"; then
-    DIFFICULTY="[Medium]"
+    TYPE="[Medium]"
 elif echo "$FILES" | grep -q "Hard"; then
-    DIFFICULTY="[Hard]"
+    TYPE="[Hard]"
 fi
 
 # Extract problem name from file changes
@@ -37,8 +40,12 @@ CURRENT_DATE=$(date +%d-%m-%Y)
 
 # Only auto-populate if commit message is empty or default
 if [ ! -s "$COMMIT_MSG_FILE" ] || grep -q "# Please enter" "$COMMIT_MSG_FILE"; then
-    # Create auto-generated message in format: POTD <date> : problem_name
-    AUTO_MSG="POTD ${CURRENT_DATE} : ${PROBLEM_NAME}"
+    # Create auto-generated message in format: POTD <date> : problem_name [Type]
+    if [ -z "$TYPE" ]; then
+        AUTO_MSG="POTD ${CURRENT_DATE} : ${PROBLEM_NAME}"
+    else
+        AUTO_MSG="POTD ${CURRENT_DATE} : ${PROBLEM_NAME} ${TYPE}"
+    fi
     
     # Insert the message at the beginning
     echo "$AUTO_MSG" > "$COMMIT_MSG_FILE.tmp"
